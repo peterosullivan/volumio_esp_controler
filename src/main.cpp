@@ -17,8 +17,11 @@ boolean play = true;
 Bounce button;
 ESP8266WiFiMulti WiFiMulti;
 WiFiClient  client;
+HTTPClient http;
 
-void setup() { 
+String volIncrease = "http://volumio.local/api/v1/commands/?cmd=volume&volume=plus";
+
+void setup(){
   Serial.begin (115200);
   delay(10);
 
@@ -39,13 +42,9 @@ void setup() {
 inline void togglePlay(){
   button.update();
   if(button.fell()){
-    play = !play;
-    if(play){
-      Serial.println("play");
-    }
-    else{
-      Serial.println("pause");
-    }
+    http.begin(client, "http://volumio.local/api/v1/commands/?cmd=toggle");
+    http.GET();
+    Serial.println("toggle play/pause");
   }
 }
 
@@ -57,12 +56,15 @@ void loop() {
     // If the outputB state is different to the outputA state, that means the encoder is rotating clockwise
     if (digitalRead(outputB) != aState) { 
       counter ++;
+      http.begin(client, volIncrease);
+      http.GET();
     } else {
       counter --;
+      http.begin(client, "http://volumio.local/api/v1/commands/?cmd=volume&volume=minus");
+      http.GET();
     }
     Serial.print("Position: ");
     Serial.println(counter);
   } 
   aLastState = aState; // Updates the previous state of the outputA with the current state
 }
-
