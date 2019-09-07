@@ -1,0 +1,1 @@
+http://docs.platformio.org/en/latest/faq.html#platformio-udev-rules
