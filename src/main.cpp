@@ -19,7 +19,7 @@ ESP8266WiFiMulti WiFiMulti;
 WiFiClient  client;
 HTTPClient http;
 
-String volIncrease = "http://volumio.local/api/v1/commands/?cmd=volume&volume=plus";
+String volumioEndpoint = "http://volumio.local/api/v1/commands/?cmd=";
 
 void setup(){
   Serial.begin (115200);
@@ -42,7 +42,7 @@ void setup(){
 inline void togglePlay(){
   button.update();
   if(button.fell()){
-    http.begin(client, "http://volumio.local/api/v1/commands/?cmd=toggle");
+    http.begin(client, volumioEndpoint + "toggle");
     http.GET();
     Serial.println("toggle play/pause");
   }
@@ -56,11 +56,11 @@ void loop() {
     // If the outputB state is different to the outputA state, that means the encoder is rotating clockwise
     if (digitalRead(outputB) != aState) { 
       counter ++;
-      http.begin(client, volIncrease);
+      http.begin(client, volumioEndpoint + "volume&volume=plus");
       http.GET();
     } else {
       counter --;
-      http.begin(client, "http://volumio.local/api/v1/commands/?cmd=volume&volume=minus");
+      http.begin(client, volumioEndpoint + "volume&volume=minus");
       http.GET();
     }
     Serial.print("Position: ");
