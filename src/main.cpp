@@ -25,7 +25,7 @@ void setup(){
   Serial.begin (115200);
   delay(10);
 
-  pinMode(BUILTIN_LED, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
@@ -33,7 +33,7 @@ void setup(){
     delay(500);
     Serial.print(".");
   }
-  digitalWrite(BUILTIN_LED, HIGH);
+  digitalWrite(LED_BUILTIN, HIGH);
   Serial.println(WiFi.localIP());
 
   // Reads the initial state of the outputA
