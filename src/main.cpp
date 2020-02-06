@@ -17,7 +17,8 @@ HTTPClient http;
 ESPRotary r = ESPRotary(rotatePinA, rotatePinB);
 Button2 b = Button2(buttonPin);
 
-String volumioEndpoint = "http://volumio.local/api/v1/commands/?cmd=";
+//volumio.local would be better that the IP address
+String volumioEndpoint = "http://192.168.0.4/api/v1/commands/?cmd=";
 
 void increaseVolume(ESPRotary &r){
   http.begin(client, volumioEndpoint + "volume&volume=plus");
